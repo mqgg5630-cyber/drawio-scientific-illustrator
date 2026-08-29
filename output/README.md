@@ -1,6 +1,52 @@
-# 机器学习筛选鲜味肽 · 可编辑插图 v2
+# 机器学习筛选鲜味肽 · 可编辑插图 v3
 
-这一版替换了 v1 的"假柱状图"，改成更接近顶刊（Nature / ISME）风格的复合信息图：真实热图、真实 SHAP 条形、真实漏斗、真实 Top 候选表、真实对接示意。
+v3 推翻 v2 的"复合信息图"思路，回到综述图（review/summary figure）的本质：**图标为主、文字为辅**。
+
+## 与 v2 的区别
+
+| 维度 | v2 (Nature 风格复合图) | v3 (综述图) |
+|---|---|---|
+| 信息密度 | 6×4 性能热图 + SHAP 7 维 + 漏斗 + Top 5 表 + 对接 | 3 个图标块 |
+| 主标题字号 | 28pt | 42pt |
+| 块标题字号 | 18pt | 28pt |
+| 描述字号 | 10pt | 16pt |
+| Caption 字号 | 10pt | 12pt |
+| 元素总数 | 243 节点 + 40 连线 | 41 节点 + 24 连线 |
+| 文件大小 | 75 KB / 135 KB | ~10 KB / ~30 KB |
+
+v2 是"看起来很丰富"的图；v3 是"3 秒钟就能看完"的图。
+
+## 交付物
+
+| 文件 | 大小 | 用途 |
+|---|---|---|
+| `umami-peptide-ml.drawio` | 10 KB | 原始 mxGraph 源文件，41 个独立 cell |
+| `umami-peptide-ml.svg` | 30 KB | 含完整 mxGraphModel 元数据的 SVG |
+| `umami-peptide-ml.png` | 48 KB | 1200px 静态预览（需 resvg-js） |
+| `index.html` | 5 KB | 通过 Google Fonts 加载 Noto Sans SC 的预览页 |
+
+## 这张图讲了什么
+
+**3 个等大方块，横向排列，统一蓝色调，单色箭头串联：**
+
+1. **序列与标签**（3 颗渐变圆，浅→深暗示"数据流入"） — n = 1 292 条已标注肽
+2. **机器学习**（中央大圆 + 5 颗卫星，红色 ★） — 5 基模型 + Stacking 集成，测试集 AUC = 0.943
+3. **候选鲜味肽**（中央深色大圆 + 4 颗卫星） — Top 23，对接 + MD + 感官复现
+
+每块下面是一段简短 caption（11–14 号字）说明数字依据。
+
+## 重新生成
+
+```bash
+# SVG
+npm run drawio:to-svg -- output/umami-peptide-ml.drawio output/umami-peptide-ml.svg
+# PNG（需先 npm install @resvg/resvg-js）
+node scripts/svg-to-png.mjs output/umami-peptide-ml.svg output/umami-peptide-ml.png 1200
+```
+
+## 中文显示
+
+SVG 内的 `font-family` 声明为 `Helvetica, Arial, sans-serif`，你本机的浏览器或 draw.io 会自动用系统中文字体（PingFang SC / Microsoft YaHei / Noto Sans CJK）回退。预览页 `index.html` 通过 Google Fonts 加载 Noto Sans SC 进一步保证浏览器内显示一致。
 
 ## 交付物
 
